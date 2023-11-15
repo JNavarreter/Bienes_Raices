@@ -1,0 +1,442 @@
+﻿@model ML.Cliente
+@{
+    ViewBag.Title = "Registrar Datos";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/PL.styles.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="~/css/formA.css" />
+
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center align-items-center text-black">
+        <div class="col-md-8">
+
+            <form id="regForm">
+                <h1 id="register">Registrar Datos del Cliente</h1>
+                <div class="all-steps" id="all-steps">
+                    <span class="step"><i class="fa fa-user"></i></span>
+                    <span class="step"><i class="fa fa-map-marker"></i></span>
+                    <span class="step"><i class="fa-solid fa-map"></i></span>
+                    <span class="step"><i class="fa-regular fa-folder-open"></i></span>
+                    <span class="step"><i class="fa-solid fa-map-location"></i></span>
+                </div>
+
+                <div class="tab">
+                    @using (Html.BeginForm("Form", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <h6>DATOS PERSONALES</h6>
+
+                        <br />
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.IdCliente, new { @class = "visually-hidden" })
+
+                            @Html.TextBoxFor(model => model.IdCliente, new { @class = "visually-hidden form-control" })
+
+                            @Html.ValidationMessageFor(model => model.IdCliente, null, new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.Contrato.Costo.Pago.IdPago, new { @class = "visually-hidden" })
+
+                            @Html.TextBoxFor(model => model.Contrato.Costo.Pago.IdPago, new { @class = "visually-hidden form-control" })
+
+                            @Html.ValidationMessageFor(model => model.Contrato.Costo.Pago.IdPago, null, new { @class = "text-danger" })
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Nombre)
+
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.ApellidoPaterno)
+
+                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.ApellidoPaterno, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.ApellidoMaterno)
+
+                                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.ApellidoMaterno, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Edad)
+
+                                @Html.TextBoxFor(model => model.Edad, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Edad, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Telefono)
+
+                                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Telefono, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Observaciones)
+
+                                @Html.TextBoxFor(model => model.Observaciones, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Observaciones, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+                <div class="tab">
+                    @using (Html.BeginForm("Form", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <h6>DIRECCION</h6>
+                        
+                        <br />
+
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Direccion.Calle)
+
+                                @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Direccion.Calle, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Direccion.NumeroInterior)
+
+                                @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Direccion.NumeroInterior, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Direccion.Numeroexterior)
+
+                                @Html.TextBoxFor(model => model.Direccion.Numeroexterior, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Direccion.Numeroexterior, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="tab">
+                    @using (Html.BeginForm("Form", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <h6>DATOS DE ADQUISICION</h6>
+                        
+                        <br />
+                        
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.Pago.Enganche)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.Pago.Enganche, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.Pago.Enganche, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.Pago.DiasPago)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.Pago.DiasPago, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.Pago.DiasPago, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.Pago.MetodoPago)
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.Contrato.Costo.Pago.MetodoPago.IdMetodoPago, new SelectList(Model.Contrato.Costo.Pago.MetodoPago.MetodosPago, "IdMetodoPago", "Nombre"), "Selecciona una opción", new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.Contrato.Costo.Pago.MetodoPago.IdMetodoPago, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.Pago.Intereses)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.Pago.Intereses, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.Pago.Intereses, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.Pago.MensualidadMinima)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.Pago.MensualidadMinima, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.Pago.MensualidadMinima, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.Letras)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.Letras, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.Letras, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.CostoTotal)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.CostoTotal, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.CostoTotal, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.TotalxMetro)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.TotalxMetro, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.TotalxMetro, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Costo.CostoxMetro)
+
+                                @Html.TextBoxFor(model => model.Contrato.Costo.CostoxMetro, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Costo.CostoxMetro, null, new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    }
+
+                
+
+                </div>
+                <div class="tab">
+                    @using (Html.BeginForm("Form", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <h6>DOCUMENTACION LEGAL</h6>
+
+                        <br />
+
+                        <div class="row">
+                                                        <div class="col">
+                                @Html.LabelFor(model => model.Contrato.NumeroContrato)
+
+                                @Html.TextBoxFor(model => model.Contrato.NumeroContrato, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.NumeroContrato, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.FechaInicioContrato)
+
+                                @Html.TextBoxFor(model => model.Contrato.FechaInicioContrato, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.FechaInicioContrato, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                            <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.FechaFinContrato)
+
+                                @Html.TextBoxFor(model => model.Contrato.FechaFinContrato, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.FechaFinContrato, null, new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.EstatusContrato)
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.Contrato.EstatusContrato.IdEstatusContrato, new SelectList(Model.Contrato.EstatusContrato.EstatusContratos, "IdEstatusContrato", "Nombre"), "Selecciona una opción", new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.Contrato.EstatusContrato.IdEstatusContrato, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                 
+                </div>
+
+                <div class="tab">
+                    @using (Html.BeginForm("Form", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <h6>DATOS DE ADQUISICION</h6>
+
+                        <br />
+
+                        <div class="row">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Ubicacion.Desarrollo)
+
+                                @Html.TextBoxFor(model => model.Contrato.Ubicacion.Desarrollo, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Ubicacion.Desarrollo, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Ubicacion.Manzana)
+
+                                @Html.TextBoxFor(model => model.Contrato.Ubicacion.Manzana, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Ubicacion.Manzana, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Ubicacion.Lote)
+
+                                @Html.TextBoxFor(model => model.Contrato.Ubicacion.Lote, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.Contrato.Ubicacion.Lote, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Contrato.Ubicacion.Estatus)
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.Contrato.Ubicacion.Estatus.IdEstatus, new SelectList(Model.Contrato.Ubicacion.Estatus.Estatuses, "IdEstatus", "Nombre"), "Selecciona una opción", new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.Contrato.Ubicacion.Estatus.IdEstatus, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+                <div class="thanks-message text-center" id="text-message">
+                    <img src="https://i.imgur.com/O18mJ1K.png" width="100" class="mb-4">
+                    <div class="row">
+                        <div class="col text-center">
+                            <input type="submit" value="Guardar Cambios" class="btn btn-success " />
+                            @Html.ActionLink("Regresar", "FormA", "Cliente", htmlAttributes: new { @class = "btn btn-danger" })
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div style="overflow:auto;" id="nextprevious">
+                    <div style="float:right;">
+                        <a type="button" asp-area="" asp-controller="Home" asp-action="Index">Regresar</a>
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-angle-double-left"></i></button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)"><i class="fa fa-angle-double-right"></i></button>
+                    </div>
+                </div>
+               
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var currentTab = 0;
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+
+        showTab(currentTab);
+
+    });
+
+    function showTab(n) {
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
+        } else {
+            document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
+        }
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        var x = document.getElementsByClassName("tab");
+        if (n == 1 && !validateForm()) return false;
+        x[currentTab].style.display = "none";
+        currentTab = currentTab + n;
+        if (currentTab >= x.length) {
+
+            document.getElementById("nextprevious").style.display = "none";
+            document.getElementById("all-steps").style.display = "none";
+            document.getElementById("register").style.display = "none";
+            document.getElementById("text-message").style.display = "block";
+
+        }
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        var x, y, i, valid = true;
+        x = document.getElementsByClassName("tab");
+        y = x[currentTab].getElementsByTagName("input");
+        for (i = 0; i < y.length; i++) {
+            if (y[i].value == "") {
+                y[i].className += " invalid";
+                valid = false;
+            }
+
+
+        }
+        if (valid) {
+            document.getElementsByClassName("step")[currentTab].className += " finish";
+        }
+        return valid;
+    }
+
+    function fixStepIndicator(n) {
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+        }
+        x[n].className += " active";
+    }
+
+</script>

@@ -1,0 +1,181 @@
+﻿@model ML.Cliente
+@{
+    ViewBag.Title = "GetAll";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/PL.styles.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="~/css/form.css" />
+
+<div class="container">
+    <section>
+        <br /><br />
+        <h1 class="title text-center">DATOS DEL CLIENTE</h1>
+        <br /><br />
+        <div class="col-md-12">
+            @using (Html.BeginForm("GetAll", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+
+                    <div class="col">
+                        @Html.LabelFor(model => model.Nombre)
+
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col">
+                        @Html.LabelFor(model => model.ApellidoPaterno)
+
+                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col">
+                        @Html.LabelFor(model => model.ApellidoMaterno)
+
+                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <br />
+
+                <br />
+                <div class="col text-center">
+                    <input type="submit" value="Buscar" class="btn btn-info " />
+                </div>
+                <a type="button" asp-area="" asp-controller="Home" asp-action="Index">Ir a Menú</a>
+            }
+        </div>
+    </section>
+
+  @*   <section>
+        <div class="row">
+
+            <div style="float:left;">
+                @Html.ActionLink("Json", "Json", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-Json" })
+            </div>
+        </div>
+    </section> *@
+
+    <section>
+        @if (Model.Clientes == null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Message
+            </div>
+        }
+        <div class="overflow-auto">
+            <table id="dtHorizontalVerticalExample" class="table table-bordered table-responsive">
+                <thead class="thead-dark">
+                    <tr>
+                        <td class="text-center" style=" font-weight:bold;">Editar</td>
+
+                        <td class="visually-hidden">IdCliente</td>
+                        <td class="text-center" style="font-weight:bold;">Nombre completo</td>
+                        <td class="text-center" style="font-weight:bold;">Edad</td>
+                        <td class="text-center" style="font-weight:bold;">Telefono</td>
+                        <td class="text-center" style="font-weight:bold;">Observaciones</td>
+
+                        <td class="visually-hidden">IdVendedor</td>
+                        <td class="text-center" style="font-weight:bold;">Nombre Vendedor</td>
+
+                        <td class="visually-hidden">IdDireccion</td>
+                        <td class="text-center" style="font-weight:bold;">Calle</td>
+                        <td class="text-center" style="font-weight:bold;">Numero Interior</td>
+                        <td class="text-center" style="font-weight:bold;">Numero exterior</td>
+
+                        <td class="text-center" style="font-weight:bold;">Numero Contrato</td>
+                        <td class="text-center" style="font-weight:bold;">Fecha Inicio Contrato</td>
+                        <td class="text-center" style="font-weight:bold;">Fecha Fin Contrato</td>
+
+                        <td class="visually-hidden">IdEstatus_Contrato</td>
+                        <td class="text-center" style="font-weight:bold;">Estatus Contrato</td>
+
+                        <td class="visually-hidden">IdPAgo</td>
+                        <td class="text-center" style="font-weight:bold;">Enganche</td>
+                        <td class="text-center" style="font-weight:bold;">Dias Pago</td>
+                        <td class="text-center" style="font-weight:bold;">Intereses</td>
+                        <td class="text-center" style="font-weight:bold;">Mensualidad Minima</td>
+
+                        <td class="visually-hidden">IdMetodoPago</td>
+                        <td class="text-center" style="font-weight:bold;">Metodo Pago</td>
+
+                        <td class="visually-hidden">IdCosto</td>
+                        <td class="text-center" style="font-weight:bold;">Letras</td>
+                        <td class="text-center" style="font-weight:bold;">Costo Total</td>
+                        <td class="text-center" style="font-weight:bold;">Total x Metro</td>
+                        <td class="text-center" style="font-weight:bold;">Costo x Metro</td>
+
+                        <td class="visually-hidden">IdUbicacion</td>
+                        <td class="text-center" style="font-weight:bold;">Desarrollo</td>
+                        <td class="text-center" style="font-weight:bold;">Manzana</td>
+                        <td class="text-center" style="font-weight:bold;">Lote</td>
+
+                        <td class="visually-hidden">IdEstatus</td>
+                        <td class="text-center" style="font-weight:bold;">Estatus</td>
+
+                        @*<td class="text-center" style=" font-weight:bold;">Eliminar</td>*@
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (ML.Cliente cliente in Model.Clientes)
+                    {
+                        <tr>
+                            <td class="text-center"><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form", "Cliente", new { idCliente = cliente.IdCliente})"></a></td>
+                            <td class="visually-hidden">@cliente.IdCliente</td>
+                            <td class="text-center">@cliente.Nombre @cliente.ApellidoPaterno @cliente.ApellidoMaterno</td>
+                            <td class="text-center">@cliente.Edad</td>
+                            <td class="text-center">@cliente.Telefono</td>
+                            <td class="text-center">@cliente.Observaciones</td>
+
+                            <td class="visually-hidden">@cliente.Vendedor.IdVendedor</td>
+                            <td class="text-center">@cliente.Vendedor.Nombre</td>
+
+                            <td class="visually-hidden">@cliente.Direccion.IdDireccion</td>
+                            <td class="text-center">@cliente.Direccion.Calle</td>
+                            <td class="text-center">@cliente.Direccion.NumeroInterior</td>
+                            <td class="text-center">@cliente.Direccion.Numeroexterior</td>
+
+                            <td class="text-center">@cliente.Contrato.NumeroContrato</td>
+                            <td class="text-center">@cliente.Contrato.FechaInicioContrato</td>
+                            <td class="text-center">@cliente.Contrato.FechaFinContrato</td>
+
+                            <td class="visually-hidden">@cliente.Contrato.EstatusContrato.IdEstatusContrato</td>
+                            <td class="text-center">@cliente.Contrato.EstatusContrato.Nombre</td>
+
+                            <td class="visually-hidden">@cliente.Contrato.Costo.Pago.IdPago</td>
+                            <td class="text-center">@cliente.Contrato.Costo.Pago.Enganche</td>
+                            <td class="text-center">@cliente.Contrato.Costo.Pago.DiasPago</td>
+                            <td class="text-center">@cliente.Contrato.Costo.Pago.Intereses</td>
+                            <td class="text-center">@cliente.Contrato.Costo.Pago.MensualidadMinima</td>
+
+                            <td class="visually-hidden">@cliente.Contrato.Costo.Pago.MetodoPago.IdMetodoPago</td>
+                            <td class="text-center">@cliente.Contrato.Costo.Pago.MetodoPago.Nombre</td>
+
+                            <td class="visually-hidden">@cliente.Contrato.Costo.IdCosto</td>
+                            <td class="text-center">@cliente.Contrato.Costo.Letras</td>
+                            <td class="text-center">@cliente.Contrato.Costo.CostoTotal</td>
+                            <td class="text-center">@cliente.Contrato.Costo.TotalxMetro</td>
+                            <td class="text-center">@cliente.Contrato.Costo.CostoxMetro</td>
+
+                            <td class="visually-hidden">@cliente.Contrato.Ubicacion.IdUbicacion</td>
+                            <td class="text-center">@cliente.Contrato.Ubicacion.Desarrollo</td>
+                            <td class="text-center">@cliente.Contrato.Ubicacion.Manzana</td>
+                            <td class="text-center">@cliente.Contrato.Ubicacion.Lote</td>
+
+                            <td class="visually-hidden">@cliente.Contrato.Ubicacion.Estatus.IdEstatus</td>
+                            <td class="text-center">@cliente.Contrato.Ubicacion.Estatus.Nombre</td>
+                            @*<td class="text-center"><a class="btn btn-danger bi bi-trash" href="@Url.Action("Delete", "Usuario", new { idUsuario = usuario.IdUsuario})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+</div>

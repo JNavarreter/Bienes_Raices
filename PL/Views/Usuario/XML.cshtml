@@ -1,0 +1,57 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "XML";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/PL.styles.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="~/css/form.css" />
+
+<div class="container">
+    @using Microsoft.AspNetCore.Http;
+    @inject IHttpContextAccessor HttpContextAccessor
+    @{
+        string XML = HttpContextAccessor.HttpContext.Session.GetString("XML"); ;
+    }
+
+    <div style="float:left;">
+        @Html.ActionLink("Descargar Registro", "XMLToExcel", "Usuario", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-XML" })
+    </div>
+    <a type="button" asp-area="" asp-controller="Home" asp-action="Index">Ir a Menú</a>
+    <br /><br />
+
+    <body>
+        <a>@XML</a>
+
+        @foreach (ML.Usuario usuario in Model.Usuarios)
+        {
+            <pre>
+            &lt;Usuario&gt;
+                &lt;idUsuario&gt;@usuario.IdUsuario&lt;/idUsuario&gt;
+                &lt;username&gt;@usuario.Username&lt;/username&gt;
+                &lt;estatus&gt;@usuario.Estatus&lt;/estatus&gt;
+                &lt;vendedor&gt;
+                    &lt;idVendedor&gt;@usuario.Vendedor.IdVendedor&lt;/idVendedor&gt;
+                    &lt;nombre&gt;@usuario.Vendedor.Nombre&lt;/nombre&gt;
+                    &lt;apellidoPaterno&gt;@usuario.Vendedor.ApellidoPaterno&lt;/apellidoPaterno&gt;
+                    &lt;apellidoMaterno&gt;@usuario.Vendedor.ApellidoMaterno&lt;/apellidoMaterno&gt;
+                    &lt;curp&gt;@usuario.Vendedor.Curp&lt;/curp&gt;
+                    &lt;rfc&gt;@usuario.Vendedor.Rfc&lt;/rfc&gt;
+                    &lt;email&gt;@usuario.Vendedor.Email&lt;/email&gt;
+                    &lt;celular&gt;@usuario.Vendedor.Celular&lt;/celular&gt;
+                &lt;/vendedor&gt;
+                &lt;rol&gt;
+                    &lt;idRol&gt;@usuario.Rol.IdRol&lt;/idRol&gt;
+                    &lt;nombre&gt;@usuario.Rol.Nombre&lt;/nombre&gt;
+                &lt;/rol&gt;
+            &lt;/Usuario&gt;
+            </pre>
+        }
+    </body>
+
+</div>

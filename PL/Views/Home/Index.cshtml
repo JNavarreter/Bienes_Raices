@@ -1,0 +1,109 @@
+﻿
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Selecciona una opcion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/Stylein.css">
+    <link rel="stylesheet" href="~/css/Stylen.css">
+ </head>
+
+<head class="loginpagebody">
+    <img data-src="holder.js/100px250" class="img-fluid" alt="100%x250" style="height: 550px; width: 250%; display: block;" src="~/Images/background.jpg" data-holder-rendered="true">
+</head>
+<br /><br />
+
+    <body>
+        <!-- Section: Inicio de Sesio -->
+        <section class="text-center">
+
+            <div id="scene">
+                <div id="left-zone">
+
+                @using Microsoft.AspNetCore.Http;
+                @inject IHttpContextAccessor HttpContextAccessor
+                @{
+                    string Rol = HttpContextAccessor.HttpContext.Session.GetString("Rol");
+                }
+                @if (Rol == "Administador")
+                {
+                    <ul class="list">
+                        <li class="item">
+                            <input type="radio" id="radio_registrar" name="basic_carousel" value="registrar" checked="checked" />
+                            <label class="label_registrar" for="radio_registrar">REGISTRAR</label>
+                            <div class="content content_registrar">
+                                @*  <span class="picto"></span> *@
+                                <img width="108" height="108" src="https://img.icons8.com/fluency/48/goodnotes.png" alt="goodnotes" />
+                                <h1>Registrar</h1>
+                                <button class="btn btn-light" type="button"><a asp-area="" asp-controller="Cliente" asp-action="FormA"><i class="fa-solid fa-circle-arrow-right fa-2xl" style="color: #023b0c;"></i></a></button>
+                            </div>
+                        </li>
+
+                        <li class="item">
+                            <input type="radio" id="radio_modificar" name="basic_carousel" value="modificar" />
+                            <label class="label_modificar" for="radio_modificar">MODIFICAR</label>
+                            <div class="content content_modificar">
+                                @* <span class="picto"></span> *@
+                                <img width="108" height="108" src="https://img.icons8.com/fluency/48/edit-property--v1.png" alt="edit-property--v1" />
+                                <h1>Modificar</h1>
+                                <button class="btn btn-light" type="button"><a asp-area="" asp-controller="Cliente" asp-action="GetAll"><i class="fa-solid fa-circle-arrow-right fa-2xl" style="color: #023b0c;"></i></a></button>
+                            </div>
+                        </li>
+
+                        <li class="item">
+                            <input type="radio" id="radio_buscar" name="basic_carousel" value="buscar" />
+                            <label class="label_busqar" for="radio_buscar">BUSCAR</label>
+                            <div class="content content_buscar">
+                                @*   <span class="picto"></span> *@
+                                <img width="108" height="108" src="https://img.icons8.com/fluency/48/search-in-list.png" alt="search-in-list" />
+                                <h1>Buscar</h1>
+                                <button class="btn btn-light" type="button"><a asp-area="" asp-controller="Cliente" asp-action="Busqueda"><i class="fa-solid fa-circle-arrow-right fa-2xl" style="color: #023b0c;"></i></a></button>
+                            </div>
+                        </li>
+
+                        <li class="item">
+                            <input type="radio" id="radio_reporte" name="basic_carousel" value="reporte" />
+                            <label class="label_reporte" for="radio_reporte">REPORTE</label>
+                            <div class="content content_reporte">
+                                @* <span class="picto"></span> *@
+                                <img width="108" height="108" src="https://img.icons8.com/fluency/48/report-file.png" alt="report-file" />
+                                <h1>Reporte</h1>
+                                <button class="btn btn-light" type="button"><a asp-area="" asp-controller="Cliente" asp-action="Reporte"><i class="fa-solid fa-circle-arrow-right fa-2xl" style="color: #023b0c;"></i></a></button>
+                            </div>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="list">
+
+                        <li class="item">
+                            <input type="radio" id="radio_modificar" name="basic_carousel" value="modificar" />
+                            <label class="label_modificar" for="radio_modificar">MODIFICAR</label>
+                            <div class="content content_modificar">
+                                @* <span class="picto"></span> *@
+                                <img width="108" height="108" src="https://img.icons8.com/fluency/48/edit-property--v1.png" alt="edit-property--v1" />
+                                <h1>Modificar</h1>
+                                <button class="btn btn-light" type="button"><a asp-area="" asp-controller="Cliente" asp-action="GetAll"><i class="fa-solid fa-circle-arrow-right fa-2xl" style="color: #023b0c;"></i></a></button>
+                            </div>
+                        </li>
+
+                        <li class="item">
+                            <input type="radio" id="radio_reporte" name="basic_carousel" value="reporte" />
+                            <label class="label_reporte" for="radio_reporte">REPORTE</label>
+                            <div class="content content_reporte">
+                                @* <span class="picto"></span> *@
+                                <img width="108" height="108" src="https://img.icons8.com/fluency/48/report-file.png" alt="report-file" />
+                                <h1>Reporte</h1>
+                                <button class="btn btn-light" type="button"><a asp-area="" asp-controller="Cliente" asp-action="Reporte"><i class="fa-solid fa-circle-arrow-right fa-2xl" style="color: #023b0c;"></i></a></button>
+                            </div>
+                        </li>
+                    </ul>
+                } 
+                </div>
+                <div id="middle-border"></div>
+                <div id="right-zone"></div>
+            </div>
+            </section>
+    </body>
+<br /><br />
