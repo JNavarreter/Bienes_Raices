@@ -432,13 +432,10 @@ namespace PL.Controllers
         {
             try
             {
-                // Ruta del archivo Excel de salida
-                string rutaArchivoExcel = "Reporte.xlsx";
+                string rutaArchivoExcel = "LogindeUsuarios.xlsx";
 
-                // Crear un nuevo documento Excel utilizando la biblioteca EPPlus
                 using (var package = new ExcelPackage())
                 {
-                    // Agregar una hoja de trabajo al libro
                     var worksheet = package.Workbook.Worksheets.Add("Hoja1");
                     using (DL.BienesRaicesSqlContext cnn = new DL.BienesRaicesSqlContext())
                     {
@@ -492,7 +489,6 @@ namespace PL.Controllers
                             package.SaveAs(memoryStream);
                             memoryStream.Position = 0;
 
-                            // Devolver el archivo Excel como respuesta
                             return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", rutaArchivoExcel);
                         }
                     }
@@ -500,7 +496,6 @@ namespace PL.Controllers
             }
             catch (Exception ex)
             {
-                // Manejar errores aquí
                 return Content("Error: " + ex.Message);
             }
         }

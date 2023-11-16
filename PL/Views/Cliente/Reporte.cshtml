@@ -19,32 +19,39 @@
                  class="" alt="">
         </div>
 
-        <div class=" box-2 d-flex flex-column h-100">
+        <div class="box-2 d-flex flex-column h-100">
             <br /><br /> 
             <p class="mb-1 h-1 text-center">REPORTES.</p>
             <p class="text-muted mb-2">Este módulo te permitira exportar documentos de acuerdo al formato deseado y establecido aqui.</p>
             <br /><br />               
             <section>
 
-            <div class="row">
+            <div class="row justify-content-center">
 
             <div style="float:left;">
-            @Html.ActionLink("Abrir Reporte en Formato Json", "Json", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-Json" })
-            </div>   
-            
+            @Html.ActionLink("Visualizar en Json", "Json", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-Json" })
             </div>
-
-            </section>  <br /><br />  
-
-            <section>
-
-                <div class="row">
+            </div><br />
+            <div class="row justify-content-center">
                     <div style="float:left;">
-                        @Html.ActionLink("Abrir Reporte en Formato XML", "XML", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-XML" })
+                        @Html.ActionLink("Visualizar en XML", "XML", "Cliente", htmlAttributes: new { @class = "btn btn-warning bi bi-filetype-Json" })
                     </div>
-                </div>
+            </div><br /><br />
+                <section>
 
-            </section>
+                    <div class="row justify-content-center">
+                        <div style="float:left;">
+                            @Html.ActionLink("Descargar en Formato Word", "JsonToWord", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-XML" })
+                        </div>
+                    </div><br />
+                    <div class="row justify-content-center">
+                        <div style="float:left;">
+                            @Html.ActionLink("Descargar en Formato Excel", "JsonToExcel", "Cliente", htmlAttributes: new { @class = "btn btn-success bi bi-filetype-XML" })
+                        </div><br />
+                    </div>
+
+                </section><br />
+            </section>  <br /><br />  
         </div>
     </div>
     <a type="button" asp-area="" asp-controller="Home" asp-action="Index">Ir a Menú</a>

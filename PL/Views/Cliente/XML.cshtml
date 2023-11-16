@@ -18,11 +18,7 @@
     @{
         string XML = HttpContextAccessor.HttpContext.Session.GetString("XML"); ;
     }
-
-    <div style="float:left;">
-        @Html.ActionLink("Descargar Registro", "XMLToExcel", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-XML" })
-    </div>
-    <a type="button" asp-area="" asp-controller="Home" asp-action="Index">Ir a Menú</a>
+    <a type="button" asp-area="" asp-controller="Cliente" asp-action="Reporte">Ir a Reportes</a>
     <br /><br />
 
     <body>
@@ -32,6 +28,7 @@
         {
             <pre>
                 &lt;cliente&gt;
+
                     &lt;idcliente&gt;@cliente.IdCliente&lt;/idcliente&gt;
                     &lt;nombre&gt;@cliente.Nombre&lt;/nombre&gt;
                     &lt;apellidopaterno&gt;@cliente.ApellidoPaterno&lt;/apellidopaterno&gt;

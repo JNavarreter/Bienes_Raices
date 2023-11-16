@@ -3,7 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using System.Net.Http.Headers;
+using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
+using Xceed.Words.NET;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace PL.Controllers
@@ -417,7 +420,110 @@ namespace PL.Controllers
 
             return View();
         }
+        public ActionResult JsonToWord()
+        {
+            try
+            {
+                // Ruta del archivo Word de salida
+                string rutaArchivoWord = "ReporteWord.docx";
 
+                using (var document = DocX.Create(rutaArchivoWord))
+                {
+                    var paragraph = document.InsertParagraph();
+
+                    using (DL.BienesRaicesSqlContext cnn = new DL.BienesRaicesSqlContext())
+                    {
+                        var query = cnn.Clientes.FromSqlRaw($"ClienteGetAll " +
+                            $"'{null}', '{null}', '{null}'").ToList();
+
+                        if (query != null)
+                        {
+                            paragraph.Append("IdCliente\tNombre\tApellidoPaterno\tApellidoMaterno\tTelefono\tObservaciones\tIdVendedor\tNombre\tApellidoPaterno\tApellidoMaterno\tNumeroContrato\tFechaInicioContrato\tFechaFinContrato").Bold();
+
+                            foreach (var row in query)
+                            {
+                                paragraph.AppendLine()
+                                    .Append($"{row.IdCliente}\t{row.Nombre}\t{row.ApellidoPaterno}\t{row.ApellidoMaterno}\t{row.Telefono}\t{row.Observaciones}\t{row.IdVendedor}\t{row.Nombre}\t{row.ApellidoPaterno}\t{row.ApellidoMaterno}\t{row.NumeroContrato}\t{row.FechaInicioContrato}\t{row.FechaFinContrato}");
+                            }
+                        }
+                    }
+                    document.Save();
+                    return File(System.IO.File.ReadAllBytes(rutaArchivoWord), "application/vnd.openxmlformats-officedocument.wordprocessingml.document", rutaArchivoWord);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores aquí
+                return Content("Error: " + ex.Message);
+            }
+        }
+        public ActionResult JsonToExcel()
+        {
+            try
+            {
+                string rutaArchivoExcel = "ReporteExcel.xlsx";
+
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Hoja1");
+
+                    using (DL.BienesRaicesSqlContext cnn = new DL.BienesRaicesSqlContext())
+                    {
+                        var query = cnn.Clientes.FromSqlRaw($"ClienteGetAll " +
+                            $"'{null}', '{null}', '{null}'").ToList();
+
+                        if (query != null)
+                        {
+                            worksheet.Cells[1, 1].Value = "IdCliente";
+                            worksheet.Cells[1, 2].Value = "Nombre";
+                            worksheet.Cells[1, 3].Value = "ApellidoPaterno";
+                            worksheet.Cells[1, 4].Value = "ApellidoMaterno";
+                            worksheet.Cells[1, 5].Value = "Telefono";
+                            worksheet.Cells[1, 6].Value = "Observaciones";
+                            worksheet.Cells[1, 7].Value = "IdVendedor";
+                            worksheet.Cells[1, 8].Value = "Nombre";
+                            worksheet.Cells[1, 9].Value = "ApellidoPaterno";
+                            worksheet.Cells[1, 10].Value = "ApellidoMaterno";
+                            worksheet.Cells[1, 11].Value = "NumeroContrato";
+                            worksheet.Cells[1, 12].Value = "FechaInicioContrato";
+                            worksheet.Cells[1, 13].Value = "FechaFinContrato";
+
+                            int fila = 2;
+                            foreach (var row in query)
+                            {
+                                worksheet.Cells[fila, 1].Value = row.IdCliente;
+                                worksheet.Cells[fila, 2].Value = row.Nombre;
+                                worksheet.Cells[fila, 3].Value = row.ApellidoPaterno;
+                                worksheet.Cells[fila, 4].Value = row.ApellidoMaterno;
+                                worksheet.Cells[fila, 5].Value = row.Telefono;
+                                worksheet.Cells[fila, 6].Value = row.Observaciones;
+                                worksheet.Cells[fila, 7].Value = row.IdVendedor;
+                                worksheet.Cells[fila, 8].Value = row.Nombre;
+                                worksheet.Cells[fila, 9].Value = row.ApellidoPaterno;
+                                worksheet.Cells[fila, 10].Value = row.ApellidoMaterno;
+                                worksheet.Cells[fila, 11].Value = row.NumeroContrato;
+                                worksheet.Cells[fila, 12].Value = row.FechaInicioContrato;
+                                worksheet.Cells[fila, 13].Value = row.FechaFinContrato;
+
+                                fila++;
+                            }
+                        }
+                    }
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        package.SaveAs(memoryStream);
+                        memoryStream.Position = 0;
+
+                        return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", rutaArchivoExcel);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content("Error: " + ex.Message);
+            }
+        }
         [HttpGet]
         public ActionResult XML()
         {
@@ -425,7 +531,7 @@ namespace PL.Controllers
 
             if (string.IsNullOrEmpty(username))
             {
-                return RedirectToAction("Login", "Cliente");
+                return RedirectToAction("Login", "Usuario");
             }
 
             ML.Cliente resultCliente = new ML.Cliente();
@@ -437,7 +543,7 @@ namespace PL.Controllers
             {
                 string urlApi = _configuration["urlWebApi"];
 
-                string requestUri = $"Clientes/GetAll";
+                string requestUri = $"Cliente/GetAll";
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
@@ -468,81 +574,6 @@ namespace PL.Controllers
             return View(resultCliente);
         }
 
-        [HttpGet]
-        public ActionResult XMLToExcel()
-        {
-            try
-            {
-                // Ruta del archivo Excel de salida
-                string rutaArchivoExcel = "ReporteExcel.xlsx";
-
-                // Crear un nuevo documento Excel utilizando la biblioteca EPPlus
-                using (var package = new ExcelPackage())
-                {
-                    // Agregar una hoja de trabajo al libro
-                    var worksheet = package.Workbook.Worksheets.Add("Hoja1");
-                    using (DL.BienesRaicesSqlContext cnn = new DL.BienesRaicesSqlContext())
-                    {
-                        var query = cnn.Clientes.FromSqlRaw($"ClienteGetAll " +
-                            $"'{null}', '{null}', '{null}'").ToList();
-
-                        if (query != null)
-                        {
-                            worksheet.Cells[1, 1].Value = "IdCliente";
-                            worksheet.Cells[1, 2].Value = "Nombre";
-                            worksheet.Cells[1, 3].Value = "ApellidoPaterno";
-                            worksheet.Cells[1, 4].Value = "ApellidoMaterno";
-                            worksheet.Cells[1, 5].Value = "Telefono";
-                            worksheet.Cells[1, 6].Value = "Observaciones";
-
-                            worksheet.Cells[1, 7].Value = "IdVendedor";
-                            worksheet.Cells[1, 8].Value = "Nombre";
-                            worksheet.Cells[1, 9].Value = "ApellidoPaterno";
-                            worksheet.Cells[1, 10].Value = "ApellidoMaterno";
-
-                            worksheet.Cells[1, 11].Value = "NumeroContrato";
-                            worksheet.Cells[1, 12].Value = "FechaInicioContrato";
-                            worksheet.Cells[1, 13].Value = "FechaFinContrato";
-
-                            int fila = 2;
-                            foreach (var row in query)
-                            {
-                                worksheet.Cells[fila, 1].Value = row.IdCliente;
-                                worksheet.Cells[fila, 2].Value = row.Nombre;
-                                worksheet.Cells[fila, 3].Value = row.ApellidoPaterno;
-                                worksheet.Cells[fila, 4].Value = row.ApellidoMaterno;
-                                worksheet.Cells[fila, 5].Value = row.Telefono;
-                                worksheet.Cells[fila, 6].Value = row.Observaciones;
-
-                                worksheet.Cells[fila, 7].Value = row.IdVendedor;
-                                worksheet.Cells[fila, 8].Value = row.Nombre;
-                                worksheet.Cells[fila, 9].Value = row.ApellidoPaterno;
-                                worksheet.Cells[fila, 10].Value = row.ApellidoMaterno;
-
-                                worksheet.Cells[fila, 11].Value = row.NumeroContrato;
-                                worksheet.Cells[fila, 12].Value = row.FechaInicioContrato;
-                                worksheet.Cells[fila, 13].Value = row.FechaFinContrato;
-
-                                fila++;
-                            }
-                        }
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            package.SaveAs(memoryStream);
-                            memoryStream.Position = 0;
-
-                            // Devolver el archivo Excel como respuesta
-                            return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", rutaArchivoExcel);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Manejar errores aquí
-                return Content("Error: " + ex.Message);
-            }
-        }
         public ActionResult Busqueda()
             {
                 ML.Cliente resultCliente = new ML.Cliente();
