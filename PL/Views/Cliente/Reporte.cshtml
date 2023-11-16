@@ -20,31 +20,53 @@
         </div>
 
         <div class=" box-2 d-flex flex-column h-100">
-            <br /><br /> 
+            <br /><br />
             <p class="mb-1 h-1 text-center">REPORTES.</p>
             <p class="text-muted mb-2">Este módulo te permitira exportar documentos de acuerdo al formato deseado y establecido aqui.</p>
-            <br /><br />               
-            <section>
+            <br />
+            <br />
+            @using Microsoft.AspNetCore.Http;
+            @inject IHttpContextAccessor HttpContextAccessor
+            @{
+                string Rol = HttpContextAccessor.HttpContext.Session.GetString("Rol");
+            }
+            @if (Rol == "Administador")
+            {
+                <section>
 
-            <div class="row">
+                    <div class="row">
 
-            <div style="float:left;">
-            @Html.ActionLink("Abrir Reporte en Formato Json", "Json", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-Json" })
-            </div>   
-            
-            </div>
+                        <div style="float:left;">
+                            @Html.ActionLink("Abrir Reporte en Formato Json", "Json", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-Json" })
+                        </div>
 
-            </section>  <br /><br />  
-
-            <section>
-
-                <div class="row">
-                    <div style="float:left;">
-                        @Html.ActionLink("Abrir Reporte en Formato XML", "XML", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-XML" })
                     </div>
-                </div>
 
-            </section>
+                </section>
+                <br />
+                <br />
+                <section>
+
+                    <div class="row">
+                        <div style="float:left;">
+                            @Html.ActionLink("Abrir Reporte en Formato XML", "XML", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-XML" })
+                        </div>
+                    </div>
+
+                </section>
+            }
+            else
+            {
+                <section>
+
+                    <div class="row">
+                        <div style="float:left;">
+                            @Html.ActionLink("Abrir Reporte en Formato XML", "XML", "Cliente", htmlAttributes: new { @class = "btn btn-info bi bi-filetype-XML" })
+                        </div>
+                    </div>
+
+                </section>
+            }
         </div>
     </div>
     <a type="button" asp-area="" asp-controller="Home" asp-action="Index">Ir a Menú</a>
