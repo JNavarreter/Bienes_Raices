@@ -496,13 +496,42 @@ namespace PL.Controllers
                             worksheet.Cells[1, 6].Value = "Observaciones";
 
                             worksheet.Cells[1, 7].Value = "IdVendedor";
-                            worksheet.Cells[1, 8].Value = "Nombre";
-                            worksheet.Cells[1, 9].Value = "ApellidoPaterno";
-                            worksheet.Cells[1, 10].Value = "ApellidoMaterno";
+                            worksheet.Cells[1, 8].Value = "NombreVendor";
 
-                            worksheet.Cells[1, 11].Value = "NumeroContrato";
-                            worksheet.Cells[1, 12].Value = "FechaInicioContrato";
-                            worksheet.Cells[1, 13].Value = "FechaFinContrato";
+                            worksheet.Cells[1, 9].Value = "IdDIreccion";
+                            worksheet.Cells[1, 10].Value = "Calle";
+                            worksheet.Cells[1, 11].Value = "NumeroInterion";
+                            worksheet.Cells[1, 12].Value = "NumeroExterior";
+
+                            worksheet.Cells[1, 13].Value = "NumeroContrato";
+                            worksheet.Cells[1, 14].Value = "FechaInicioContrato";
+                            worksheet.Cells[1, 15].Value = "FechaFinContrato";
+
+                            worksheet.Cells[1, 16].Value = "IdEstatus_Contrato";
+                            worksheet.Cells[1, 17].Value = "NombreEstatusContrato";
+
+                            worksheet.Cells[1, 18].Value = "IdCosto";
+                            worksheet.Cells[1, 19].Value = "Letras";
+                            worksheet.Cells[1, 20].Value = "CostoTotal";
+                            worksheet.Cells[1, 21].Value = "TotalxMetro";
+                            worksheet.Cells[1, 22].Value = "CostoxMetro";
+
+                            worksheet.Cells[1, 23].Value = "IdPago";
+                            worksheet.Cells[1, 24].Value = "Enganche";
+                            worksheet.Cells[1, 25].Value = "DiasPago";
+                            worksheet.Cells[1, 26].Value = "Intereses";
+                            worksheet.Cells[1, 27].Value = "MensualidadMinima";
+
+                            worksheet.Cells[1, 28].Value = "IdMetodoPago";
+                            worksheet.Cells[1, 29].Value = "NombreMetodoPago";
+
+                            worksheet.Cells[1, 30].Value = "IdUbicacion";
+                            worksheet.Cells[1, 31].Value = "Desarrollo";
+                            worksheet.Cells[1, 32].Value = "Manzana";
+                            worksheet.Cells[1, 33].Value = "Lote";
+
+                            worksheet.Cells[1, 34].Value = "IdEstatus";
+                            worksheet.Cells[1, 35].Value = "NombreEstatus";
 
                             int fila = 2;
                             foreach (var row in query)
@@ -516,12 +545,40 @@ namespace PL.Controllers
 
                                 worksheet.Cells[fila, 7].Value = row.IdVendedor;
                                 worksheet.Cells[fila, 8].Value = row.Nombre;
-                                worksheet.Cells[fila, 9].Value = row.ApellidoPaterno;
-                                worksheet.Cells[fila, 10].Value = row.ApellidoMaterno;
 
-                                worksheet.Cells[fila, 11].Value = row.NumeroContrato;
-                                worksheet.Cells[fila, 12].Value = row.FechaInicioContrato;
-                                worksheet.Cells[fila, 13].Value = row.FechaFinContrato;
+                                worksheet.Cells[fila, 9].Value = row.IdDireccion;
+                                worksheet.Cells[fila, 10].Value = row.Calle;
+                                worksheet.Cells[fila, 11].Value = row.NumeroInterior;
+                                worksheet.Cells[fila, 12].Value = row.Numeroexterior;
+
+                                worksheet.Cells[fila, 13].Value = row.NumeroContrato;
+                                worksheet.Cells[fila, 14].Value = row.FechaInicioContrato;
+                                worksheet.Cells[fila, 15].Value = row.FechaFinContrato;
+
+                                worksheet.Cells[fila, 16].Value = row.IdEstatus_Contrato;
+                                worksheet.Cells[fila, 17].Value = row.NombreEstatusContrato;
+
+                                worksheet.Cells[fila, 18].Value = row.IdCliente;
+                                worksheet.Cells[fila, 19].Value = row.Letras;
+                                worksheet.Cells[fila, 20].Value = row.CostoTotal;
+                                worksheet.Cells[fila, 21].Value = row.TotalxMetro;
+                                worksheet.Cells[fila, 22].Value = row.CostoxMetro;
+
+                                worksheet.Cells[fila, 23].Value = row.IdPago;
+                                worksheet.Cells[fila, 24].Value = row.Enganche;
+                                worksheet.Cells[fila, 25].Value = row.DiasPago;
+                                worksheet.Cells[fila, 26].Value = row.Intereses;
+                                worksheet.Cells[fila, 27].Value = row.MensualidadMinima;
+
+                                worksheet.Cells[fila, 28].Value = row.IdMetodoPago;
+                                worksheet.Cells[fila, 29].Value = row.NombreMetodoPago;
+
+                                worksheet.Cells[fila, 30].Value = row.IdUbicacion;
+                                worksheet.Cells[fila, 31].Value = row.Desarrollo;
+                                worksheet.Cells[fila, 32].Value = row.Manzana;
+                                worksheet.Cells[fila, 33].Value = row.Lote;
+                                worksheet.Cells[fila, 34].Value = row.IdEstatus;
+                                worksheet.Cells[fila, 35].Value = row.NombreEstatus;
 
                                 fila++;
                             }
@@ -543,39 +600,39 @@ namespace PL.Controllers
                 return Content("Error: " + ex.Message);
             }
         }
+
         public ActionResult Busqueda()
+        {
+            ML.Cliente resultCliente = new ML.Cliente();
+
+            resultCliente.Clientes = new List<object>();
+
+            using (var client = new HttpClient())
             {
-                ML.Cliente resultCliente = new ML.Cliente();
+                string urlApi = _configuration["urlWebApi"];
 
-                resultCliente.Clientes = new List<object>();
+                string requestUri = $"Cliente/GetAll";
 
-                using (var client = new HttpClient())
+                var responseTask = client.GetAsync(new Uri(new Uri(urlApi), requestUri));
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
                 {
-                    string urlApi = _configuration["urlWebApi"];
+                    var readTask = result.Content.ReadAsAsync<ML.Result>();
+                    readTask.Wait();
 
-                    string requestUri = $"Cliente/GetAll";
-
-                    var responseTask = client.GetAsync(new Uri(new Uri(urlApi), requestUri));
-                    responseTask.Wait();
-
-                    var result = responseTask.Result;
-
-                    if (result.IsSuccessStatusCode)
+                    foreach (var resultItem in readTask.Result.Objects)
                     {
-                        var readTask = result.Content.ReadAsAsync<ML.Result>();
-                        readTask.Wait();
-
-                        foreach (var resultItem in readTask.Result.Objects)
-                        {
-                            ML.Cliente ResultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Cliente>(resultItem.ToString());
-                            resultCliente.Clientes.Add(ResultItemList);
-                        }
+                        ML.Cliente ResultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Cliente>(resultItem.ToString());
+                        resultCliente.Clientes.Add(ResultItemList);
                     }
                 }
-                _httpContextAccessor.HttpContext.Session.SetString("Json", JsonConvert.SerializeObject(resultCliente));
-
-                return View(resultCliente);
             }
-      
+            _httpContextAccessor.HttpContext.Session.SetString("Json", JsonConvert.SerializeObject(resultCliente));
+
+            return View(resultCliente);
         }
+    }
 }
