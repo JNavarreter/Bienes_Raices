@@ -316,7 +316,7 @@ namespace PL.Controllers
             return bytes;
         }
 
-        public IActionResult Login()
+        public ActionResult Login()
         {
             ML.Usuario usuario = new ML.Usuario();
             string username = _httpContextAccessor.HttpContext.Session.GetString("Username");
@@ -330,7 +330,7 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(ML.Usuario usuario, string password)
+        public ActionResult Login(ML.Usuario usuario, string password)
         {
             ML.Result resultUsuario = BL.Usuario.GetByUsername(usuario.Username);
 
