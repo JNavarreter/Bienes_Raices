@@ -13,14 +13,14 @@ namespace BL
             {
                 using (DL.BienesRaicesSqlContext cnn = new DL.BienesRaicesSqlContext())
                 {
-                    int query = cnn.Database.ExecuteSqlRaw("EXEC UsuarioAdd" +
-                        "@NombreVendedor, @ApellidoPaternoVendedor, @ApellidoMaternoVendedor, @CurpVendedor, @RfcVendedor, @FotoVendedor, @EmailVendedor, @CelularVendedor," +
-                        "@Username, @Password, @IdRol",
+                    int query = cnn.Database.ExecuteSqlRaw("EXEC UsuarioAdd " +
+                        "@Nombre, @ApellidoPaterno, @ApellidoMaterno, @CURP, @RFC, @Foto, @Email, @Celular, " +
+                        "@Username, @IdRol",
                         new SqlParameter("@Nombre", usuario.Vendedor.Nombre),
                         new SqlParameter("@ApellidoPaterno", usuario.Vendedor.ApellidoPaterno),
                         new SqlParameter("@ApellidoMaterno", usuario.Vendedor.ApellidoMaterno),
-                        new SqlParameter("@Curp", usuario.Vendedor.Curp),
-                        new SqlParameter("@Rfc", usuario.Vendedor.Rfc ?? (object)DBNull.Value),
+                        new SqlParameter("@CURP", usuario.Vendedor.Curp),
+                        new SqlParameter("@RFC", usuario.Vendedor.Rfc ?? (object)DBNull.Value),
                         new SqlParameter("@Foto", usuario.Vendedor.Foto ?? (object)DBNull.Value),
                         new SqlParameter("@Email", usuario.Vendedor.Email),
                         new SqlParameter("@Celular", usuario.Vendedor.Celular),
@@ -81,15 +81,15 @@ namespace BL
             {
                 using (DL.BienesRaicesSqlContext cnn = new DL.BienesRaicesSqlContext())
                 {
-                    int query = cnn.Database.ExecuteSqlRaw("EXEC UsuarioUpdate" +
-                        "@IdVendedor, @NombreVendedor, @ApellidoPaternoVendedor, @ApellidoMaternoVendedor, @CurpVendedor, @RfcVendedor, @FotoVendedor, @EmailVendedor, @CelularVendedor," +
-                        "@Username, @Password, @IdRol",
-                        new SqlParameter("@idVendedor", usuario.Vendedor.IdVendedor),
+                    int query = cnn.Database.ExecuteSqlRaw("EXEC UsuarioUpdateNoPassword " +
+                        "@IdVendedor, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @CURP, @RFC, @Foto, @Email, @Celular, " +
+                        "@Username, @IdRol",
+                        new SqlParameter("@IdVendedor", usuario.Vendedor.IdVendedor),
                         new SqlParameter("@Nombre", usuario.Vendedor.Nombre),
                         new SqlParameter("@ApellidoPaterno", usuario.Vendedor.ApellidoPaterno),
                         new SqlParameter("@ApellidoMaterno", usuario.Vendedor.ApellidoMaterno),
-                        new SqlParameter("@Curp", usuario.Vendedor.Curp),
-                        new SqlParameter("@Rfc", usuario.Vendedor.Rfc ?? (object)DBNull.Value),
+                        new SqlParameter("@CURP", usuario.Vendedor.Curp),
+                        new SqlParameter("@RFC", usuario.Vendedor.Rfc ?? (object)DBNull.Value),
                         new SqlParameter("@Foto", usuario.Vendedor.Foto ?? (object)DBNull.Value),
                         new SqlParameter("@Email", usuario.Vendedor.Email),
                         new SqlParameter("@Celular", usuario.Vendedor.Celular),

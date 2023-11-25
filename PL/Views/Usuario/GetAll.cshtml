@@ -124,7 +124,7 @@
                             {
                                 <td style="text-align: center; vertical-align: middle;">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="changeStatus(@usuario.IdUsuario, this);">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" false onchange="changeStatus(@usuario.IdUsuario, this);">
                                     </div>
                                 </td>
                             }
@@ -139,22 +139,3 @@
     </section>
     <br /><br />
 </div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
-<script type="text/javascript">
-    function changeStatus(idUsuario, e) {
-        var status = e.checked
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("CambiarEstatus")',
-            dataType: 'json',
-            data: { idUsuario: idUsuario, status: status },
-            success: {},
-            error: function (ex) {
-                alert('Failed.' + ex);
-            }
-        });
-    }
-</script>
